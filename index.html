@@ -34,13 +34,13 @@
         <h3>
 <a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduction</h3>
 
-<p>This data set is from the John Hopkins University Coursera Course titled: "R Programming". The current examples are pulled from question 1 of homework assignment 3. You can find the text (verbatim) for the assignment below:</p>
+<p><em>This data set is from the John Hopkins University Coursera Course titled: "R Programming". The current examples are pulled from question 1 of homework assignment 3. You can find the text (verbatim) for the assignment below:</em></p>
 
-<p>Read the outcome data into R via the read.csv function and look at the ﬁrst few rows. &gt; outcome &lt;- read.csv("outcome-of-care-measures.csv", colClasses = "character") &gt; head(outcome) There are many columns in this dataset. You can see how many by typing ncol(outcome) (you can see the number of rows with the nrow function). In addition, you can see the names of each column by typing names(outcome) (the names are also in the PDF document.</p>
+<p><em>Read the outcome data into R via the read.csv function and look at the ﬁrst few rows. &gt; outcome &lt;- read.csv("outcome-of-care-measures.csv", colClasses = "character") &gt; head(outcome) There are many columns in this dataset. You can see how many by typing ncol(outcome) (you can see the number of rows with the nrow function). In addition, you can see the names of each column by typing names(outcome) (the names are also in the PDF document.</em></p>
 
-<p>To make a simple histogram of the 30-day death rates from heart attack (column 11 in the outcome dataset), run &gt; outcome[, 11] &lt;- as.numeric(outcome[, 11]) &gt; ## You may get a warning about NAs being introduced; that is okay &gt; hist(outcome[, 11])</p>
+<p><em>To make a simple histogram of the 30-day death rates from heart attack (column 11 in the outcome dataset), run &gt; outcome[, 11] &lt;- as.numeric(outcome[, 11]) &gt; ## You may get a warning about NAs being introduced; that is okay &gt; hist(outcome[, 11])</em></p>
 
-<p>Because we originally read the data in as character (by specifying colClasses = "character" we need to coerce the column to be numeric. You may get a warning about NAs being introduced but that is okay.</p>
+<p><em>Because we originally read the data in as character (by specifying colClasses = "character" we need to coerce the column to be numeric. You may get a warning about NAs being introduced but that is okay.</em></p>
 
 <p>The data file can be downloaded here: </p>
 
