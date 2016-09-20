@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Coursera: R Programming, Homework 3 Question 1 : ">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Coursera: R Programming, Homework 3 Question 1</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/mjtat/-Coursera-Programming-Assignment-Homework-3-Part-1">View on GitHub</a>
+
+          <h1 id="project_title">Coursera: R Programming, Homework 3 Question 1</h1>
+          <h2 id="project_tagline"></h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/mjtat/-Coursera-Programming-Assignment-Homework-3-Part-1/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/mjtat/-Coursera-Programming-Assignment-Homework-3-Part-1/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h3>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduction</h3>
+
+<p>This data set is from the John Hopkins University Coursera Course titled: "R Programming". The current examples are pulled from question 1 of homework assignment 3. You can find the text (verbatim) for the assignment below:</p>
+
+<p>Read the outcome data into R via the read.csv function and look at the ﬁrst few rows. &gt; outcome &lt;- read.csv("outcome-of-care-measures.csv", colClasses = "character") &gt; head(outcome) There are many columns in this dataset. You can see how many by typing ncol(outcome) (you can see the number of rows with the nrow function). In addition, you can see the names of each column by typing names(outcome) (the names are also in the PDF document.</p>
+
+<p>To make a simple histogram of the 30-day death rates from heart attack (column 11 in the outcome dataset), run &gt; outcome[, 11] &lt;- as.numeric(outcome[, 11]) &gt; ## You may get a warning about NAs being introduced; that is okay &gt; hist(outcome[, 11])</p>
+
+<p>Because we originally read the data in as character (by specifying colClasses = "character" we need to coerce the column to be numeric. You may get a warning about NAs being introduced but that is okay.</p>
+
+<p>The data file can be downloaded here: </p>
+
+<p><a href="https://github.com/mjtat/-Coursera-Programming-Assignment-Homework-3-Part-1/blob/master/outcome-of-care-measures.csv">Outcomes Data</a></p>
+
+<hr>
+
+<hr>
+
+<h2>
+<a id="the-following-code-will-plot-a-histogram-as-specified" class="anchor" href="#the-following-code-will-plot-a-histogram-as-specified" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The following code will plot a histogram as specified.</h2>
+
+<hr>
+
+<hr>
+
+<h3>
+<a id="first-read-in-the-file-do-a-little-organizing-and-cleaning-eg-omit-nas-rename-columns-in-data-frame" class="anchor" href="#first-read-in-the-file-do-a-little-organizing-and-cleaning-eg-omit-nas-rename-columns-in-data-frame" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>First read in the file, do a little organizing and cleaning (e.g., omit NAs, rename columns in data frame).</h3>
+
+<pre><code>## Read in the data
+
+outcome_dat&lt;-read.csv("outcome-of-care-measures.csv", header = TRUE)
+outcome_heartattack &lt;- data.frame(as.double(outcome_dat$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack))
+outcome_heartattack[outcome_heartattack == "Not Available"] &lt;- NA
+outcome_heartattack &lt;- outcome_heartattack[complete.cases(outcome_heartattack),]
+outcome_heartattack &lt;- data.frame(as.double(outcome_heartattack))
+names(outcome_heartattack)&lt;-c("Deaths")
+</code></pre>
+
+<h3>
+<a id="lets-plot-the-histogram-instead-of-using-the-generic-hist-function-in-base-r-lets-overachieve-and-use-ggplot2" class="anchor" href="#lets-plot-the-histogram-instead-of-using-the-generic-hist-function-in-base-r-lets-overachieve-and-use-ggplot2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Let's plot the histogram. Instead of using the generic <code>hist()</code> function in base R, let's overachieve and use <code>ggplot2</code>!</h3>
+
+<pre><code>## Let's over achieve and use ggplot2 because the regular plots in R aren't so fancy. Refer to the ggplot2 
+## documentation to understand how building plots works.
+
+library(ggplot2)
+
+object &lt;- ggplot(data = outcome_heartattack, aes(x = Deaths))
+
+hist &lt;- geom_histogram(binwidth = 5, colour = "black", fill = "cyan")
+
+axislabs &lt;- labs(title = "Histogram of 30-day death rates due to Heart Attack",  y = "# of Deaths", x = "Deaths (binned)") 
+
+theme &lt;- theme(panel.background = element_rect(colour = "black", fill = "gray97"))
+
+scale_x &lt;- scale_x_continuous(breaks = seq(0, 100, by = 10))
+
+# Put all the ggplot pieces together
+
+histogram&lt;-object + hist + axislabs + theme + scale_x
+</code></pre>
+
+<h2>
+<a id="save-the-histogram" class="anchor" href="#save-the-histogram" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Save the histogram.</h2>
+
+<pre><code># Save the plot
+ggsave("histogram.png", plot = histogram , width = 8, height = 6)
+</code></pre>
+
+<h2>
+<a id="see-the-resulting-histogram-below" class="anchor" href="#see-the-resulting-histogram-below" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>See the resulting histogram below.</h2>
+
+<p><img src="https://github.com/mjtat/-Coursera-Programming-Assignment-Homework-3-Part-1/blob/master/histogram.png?raw=true" alt=""></p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Coursera: R Programming, Homework 3 Question 1 maintained by <a href="https://github.com/mjtat">mjtat</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
